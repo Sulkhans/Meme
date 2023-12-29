@@ -62,30 +62,6 @@ const Canvas = ({
     }
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (isDragging && canvasRef.current) {
-      const rect = canvasRef.current.getBoundingClientRect();
-      const mouseX =
-        (e.targetTouches[0]
-          ? e.targetTouches[0].pageX
-          : e.changedTouches[e.changedTouches.length - 1].pageX) - rect.left;
-      const mouseY =
-        (e.targetTouches[0]
-          ? e.targetTouches[0].pageY
-          : e.changedTouches[e.changedTouches.length - 1].pageY) - rect.top;
-      setTexts((prevTexts) => {
-        const newTexts = [...prevTexts];
-        newTexts[activeIndex] = {
-          ...newTexts[activeIndex],
-          x: mouseX,
-          y: mouseY,
-        };
-        return newTexts;
-      });
-      e.preventDefault();
-    }
-  };
-
   const handleDownload = () => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
@@ -106,9 +82,6 @@ const Canvas = ({
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        onTouchStart={handleMouseDown}
-        onTouchEnd={handleMouseUp}
-        onTouchMove={handleTouchMove}
       />
       <button onClick={handleDownload}>Download Image</button>
     </div>
