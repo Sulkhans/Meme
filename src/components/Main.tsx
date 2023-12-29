@@ -57,8 +57,8 @@ export const Main = () => {
   return (
     <main>
       <Canvas
-        width={window.innerWidth < window.innerHeight ? 300 : 500}
-        height={window.innerWidth < window.innerHeight ? 300 : 500}
+        width={500}
+        height={500}
         meme={meme}
         texts={texts}
         setTexts={setTexts}
