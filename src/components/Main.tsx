@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Canvas from "./Canvas";
-import Options from "./Options";
+import Template from "./Template";
+import Text from "./Text";
 
 export type MemeObject = {
   id: string;
@@ -63,12 +64,15 @@ export const Main = () => {
         setTexts={setTexts}
         activeIndex={activeIndex}
       />
-      <Options
+      <Template
         memeTemplates={memeTemplates}
-        meme={meme}
         setMeme={setMeme}
+        setTexts={setTexts}
+      />
+      <Text
         texts={texts}
         setTexts={setTexts}
+        activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
       />
     </main>
