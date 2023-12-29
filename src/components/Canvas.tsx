@@ -1,26 +1,31 @@
 import { useEffect, useRef, useState } from "react";
-import { MemeObject } from "./Main";
+import { MemeObject, TextObject } from "./Main";
 
 type CanvasProps = {
   width: number;
   height: number;
   meme: MemeObject;
-  text: string;
+  texts: TextObject[];
+  setTexts: React.Dispatch<React.SetStateAction<TextObject[]>>;
+  activeIndex: number;
 };
 
-const Canvas = ({ width, height, meme, text }: CanvasProps) => {
-  const [textPosition, setTextPosition] = useState({
-    x: width / 2,
-    y: height / 2,
-  });
+const Canvas = ({
+  width,
+  height,
+  meme,
+  texts,
+  setTexts,
+  activeIndex,
+}: CanvasProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const drawText = (context: CanvasRenderingContext2D) => {
-    context.font = "30px Poppins";
+  const drawText = (context: CanvasRenderingContext2D, obj: TextObject) => {
+    context.font = "16px Poppins";
     context.fillStyle = "black";
     context.textAlign = "center";
-    context.fillText(text, textPosition.x, textPosition.y);
+    context.fillText(obj.text, obj.x, obj.y);
   };
 
   useEffect(() => {
@@ -29,30 +34,34 @@ const Canvas = ({ width, height, meme, text }: CanvasProps) => {
       var img = new Image();
       img.src = meme.url;
       img.crossOrigin = "anonymous";
-      console.log(meme);
       if (context) {
         img.onload = () => {
           context.drawImage(img, 0, 0, width, height);
-          drawText(context);
+          texts.forEach((obj) => drawText(context, obj));
         };
       }
     }
-  }, [meme, text, textPosition]);
+  }, [meme, texts]);
 
-  const handleMouseDown = () => {
-    setIsDragging(true);
-  };
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+  const handleMouseDown = () => setIsDragging(true);
+  const handleMouseUp = () => setIsDragging(false);
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isDragging && canvasRef.current) {
       const rect = canvasRef.current.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
-      setTextPosition({ x: mouseX, y: mouseY });
+      setTexts((prevTexts) => {
+        const newTexts = [...prevTexts];
+        newTexts[activeIndex] = {
+          ...newTexts[activeIndex],
+          x: mouseX,
+          y: mouseY,
+        };
+        return newTexts;
+      });
     }
   };
+
   const handleDownload = () => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
