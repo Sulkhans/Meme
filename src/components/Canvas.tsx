@@ -62,12 +62,7 @@ const Canvas = ({
     }
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
   const handleTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault();
     if (isDragging && canvasRef.current) {
       const rect = canvasRef.current.getBoundingClientRect();
       const mouseX =
@@ -87,6 +82,7 @@ const Canvas = ({
         };
         return newTexts;
       });
+      e.preventDefault();
     }
   };
 
@@ -110,7 +106,7 @@ const Canvas = ({
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        onTouchStart={handleTouchStart}
+        onTouchStart={handleMouseDown}
         onTouchEnd={handleMouseUp}
         onTouchMove={handleTouchMove}
       />
