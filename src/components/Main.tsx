@@ -11,6 +11,12 @@ export type MemeObject = {
   box_count: number;
 };
 
+export type TextObject = {
+  text: string;
+  x: number;
+  y: number;
+};
+
 export const Main = () => {
   const [memeTemplates, setMemeTemplates] = useState<Array<MemeObject>>([]);
   const [meme, setMeme] = useState<MemeObject>({
@@ -21,7 +27,10 @@ export const Main = () => {
     height: 0,
     box_count: 0,
   });
-  const [text, setText] = useState<string>("text");
+  const [texts, setTexts] = useState<Array<TextObject>>([
+    { text: "", x: 250, y: 250 },
+  ]);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   useEffect(() => {
     const URL = "https://api.imgflip.com/get_memes";
@@ -29,21 +38,38 @@ export const Main = () => {
     fetch(URL, options)
       .then((res) => res.json())
       .then((json) => {
+        const { memes } = json.data;
         console.log(json);
-        setMemeTemplates(json.data.memes);
-        setMeme(json.data.memes[0]);
+        setMemeTemplates(memes);
+        setMeme(memes[0]);
+        setTexts(
+          Array(memes[0].box_count).fill({
+            text: "",
+            x: 250,
+            y: 250,
+          })
+        );
       })
       .catch((err) => console.error("error:" + err));
   }, []);
 
   return (
     <main>
-      <Canvas width={500} height={500} meme={meme} text={text} />
+      <Canvas
+        width={500}
+        height={500}
+        meme={meme}
+        texts={texts}
+        setTexts={setTexts}
+        activeIndex={activeIndex}
+      />
       <Options
         memeTemplates={memeTemplates}
+        meme={meme}
         setMeme={setMeme}
-        text={text}
-        setText={setText}
+        texts={texts}
+        setTexts={setTexts}
+        setActiveIndex={setActiveIndex}
       />
     </main>
   );
