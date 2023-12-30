@@ -9,24 +9,43 @@ type TextProps = {
 
 const Text = ({ texts, setTexts, activeIndex, setActiveIndex }: TextProps) => {
   const handleText = (e: React.ChangeEvent<HTMLInputElement>, i: number) => {
-    console.log(texts);
+    const { name, value } = e.target;
     setTexts((prevTexts) => {
       const newTexts = [...prevTexts];
-      newTexts[i] = { ...newTexts[i], text: e.target.value };
+      if (name === "size") {
+        newTexts[i] = { ...newTexts[i], [name]: `${value}px` };
+      } else newTexts[i] = { ...newTexts[i], [name]: value };
       return newTexts;
     });
   };
   return (
     <div>
       {texts.map((obj, i) => (
-        <input
-          key={i}
-          value={obj.text}
-          placeholder={`Text ${i + 1}`}
-          onChange={(e) => handleText(e, i)}
-          onClick={() => setActiveIndex(i)}
-          className={`outline-none ${activeIndex === i && ""}`}
-        />
+        <div key={i}>
+          <input
+            name="text"
+            value={obj.text}
+            placeholder={`Text ${i + 1}`}
+            onChange={(e) => handleText(e, i)}
+            onClick={() => setActiveIndex(i)}
+            className={`outline-none ${activeIndex === i && ""}`}
+          />
+          <input
+            name="size"
+            type="range"
+            defaultValue={32}
+            min={20}
+            max={64}
+            onChange={(e) => handleText(e, i)}
+            onClick={() => setActiveIndex(i)}
+          />
+          <input
+            name="color"
+            type="color"
+            onChange={(e) => handleText(e, i)}
+            onClick={() => setActiveIndex(i)}
+          />
+        </div>
       ))}
     </div>
   );

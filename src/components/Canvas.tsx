@@ -22,9 +22,8 @@ const Canvas = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const drawText = (context: CanvasRenderingContext2D, obj: TextObject) => {
-    context.font = "16px Poppins";
-    context.fillStyle = "black";
-    context.textAlign = "center";
+    context.font = `${obj.size} Impact`;
+    context.fillStyle = obj.color;
     context.fillText(obj.text, obj.x, obj.y);
   };
 
@@ -83,7 +82,7 @@ const Canvas = ({
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       />
-      <button onClick={handleDownload}>Download Image</button>
+      <button onClick={handleDownload}>Download</button>
     </div>
   );
 };

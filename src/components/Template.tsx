@@ -11,7 +11,13 @@ const Template = ({ memeTemplates, setMeme, setTexts }: TemplateProps) => {
     const index = Number(e.target.value);
     setMeme(memeTemplates[index]);
     setTexts(
-      Array(memeTemplates[index].box_count).fill({ text: "", x: 250, y: 250 })
+      Array(memeTemplates[index].box_count).fill({
+        text: "",
+        x: 250,
+        y: 250,
+        size: "32px",
+        color: "black",
+      })
     );
   };
 

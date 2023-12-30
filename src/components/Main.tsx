@@ -16,6 +16,8 @@ export type TextObject = {
   text: string;
   x: number;
   y: number;
+  size: string;
+  color: string;
 };
 
 export const Main = () => {
@@ -29,7 +31,7 @@ export const Main = () => {
     box_count: 0,
   });
   const [texts, setTexts] = useState<Array<TextObject>>([
-    { text: "", x: 250, y: 250 },
+    { text: "", x: 250, y: 250, size: "", color: "" },
   ]);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
@@ -48,6 +50,8 @@ export const Main = () => {
             text: "",
             x: 250,
             y: 250,
+            size: "32px",
+            color: "black",
           })
         );
       })
