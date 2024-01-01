@@ -59,25 +59,28 @@ export const Main = () => {
   }, []);
 
   return (
-    <main>
+    <main className="flex flex-col items-center py-6 gap-6 bg-[#202020] lg:h-screen lg:flex-row lg:justify-evenly">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-center text-white text-3xl my-2">Meme</h1>
+        <Template
+          memeTemplates={memeTemplates}
+          setMeme={setMeme}
+          setTexts={setTexts}
+        />
+        <Text
+          texts={texts}
+          setTexts={setTexts}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+        />
+      </div>
       <Canvas
-        width={500}
-        height={500}
+        width={600}
+        height={600}
         meme={meme}
         texts={texts}
         setTexts={setTexts}
         activeIndex={activeIndex}
-      />
-      <Template
-        memeTemplates={memeTemplates}
-        setMeme={setMeme}
-        setTexts={setTexts}
-      />
-      <Text
-        texts={texts}
-        setTexts={setTexts}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
       />
     </main>
   );

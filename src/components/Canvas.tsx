@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MemeObject, TextObject } from "./Main";
+// @ts-ignore
+import Download from "../assets/download.svg?react";
 
 type CanvasProps = {
   width: number;
@@ -73,7 +75,7 @@ const Canvas = ({
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-6 relative">
       <canvas
         ref={canvasRef}
         width={width}
@@ -81,8 +83,12 @@ const Canvas = ({
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
+        className={`rounded-sm cursor-grab ${isDragging && "cursor-grabbing"}`}
       />
-      <button onClick={handleDownload}>Download</button>
+      <Download
+        onClick={handleDownload}
+        className="absolute bottom-4 right-4 w-10 h-10 border-2 border-[#606060] bg-[#303030] hover:bg-[#404040] rounded-md p-1"
+      />
     </div>
   );
 };

@@ -22,15 +22,16 @@ const Template = ({ memeTemplates, setMeme, setTexts }: TemplateProps) => {
   };
 
   return (
-    <div>
-      <select onChange={handleTemplate}>
-        {memeTemplates.map((meme, i) => (
-          <option key={i} value={i}>
-            {meme.name}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      onChange={handleTemplate}
+      className="w-80 border-2 border-[#606060] bg-[#303030] hover:bg-[#404040] hover:border-white indent-2 rounded-md py-2 text-white transition-all outline-none appearance-none"
+    >
+      {memeTemplates.map((meme, i) => (
+        <option key={i} value={i}>
+          {meme.name}
+        </option>
+      ))}
+    </select>
   );
 };
 export default Template;
